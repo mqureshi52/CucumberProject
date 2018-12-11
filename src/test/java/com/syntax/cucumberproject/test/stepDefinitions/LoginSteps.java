@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 import cucumber.api.PendingException;
@@ -57,7 +58,25 @@ public void i_successfully_logged_in() {
     String xyz=driver.getTitle();
     Assert.assertEquals(abc, xyz);
     
-	System.out.println("Successfully logging in");}
+	System.out.println("Successfully logging in");
 
 	}
-	   
+@When("^I enter invalid username and password$")
+public void i_enter_invalid_username_and_password() throws Exception {
+	driver.findElement(By.xpath("//input[@placeholder='Username']")).sendKeys("mqureshi52");
+    driver.findElement(By.xpath("//input[@placeholder='Password']")).sendKeys("Diamondcouch");
+    Thread.sleep(2000);
+    driver.findElement(By.xpath("//input[@value='Login']")).click();
+System.out.println("entred invalid credentials");
+}
+
+@Then("^I see error message$")
+public void i_see_error_message() throws Throwable {
+	Thread.sleep(2000);
+    WebElement expected = driver.findElement(By.xpath("//input[@value='Login']"));
+    WebElement actual = driver.findElement(By.xpath("//input[@value='Login']"));
+    Assert.assertEquals(expected, actual);
+    System.out.println("I see no error message");
+}
+
+}
